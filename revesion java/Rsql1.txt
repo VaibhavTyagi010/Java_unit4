@@ -1,0 +1,227 @@
+1.mysql> select name prices from products;
++-----------------+
+| prices          |
++-----------------+
+| Hard drive      |
+| Memory          |
+| ZIP drive       |
+| Floppy disk     |
+| Monitor         |
+| DVD drive       |
+| CD drive        |
+| Printer         |
+| Toner cartridge |
+| DVD burner      |
++-----------------+
+10 rows in set (0.00 sec)
+
+
+
+2.mysql> select name,price from products;
++-----------------+-------+
+| name            | price |
++-----------------+-------+
+| Hard drive      |   240 |
+| Memory          |   120 |
+| ZIP drive       |   150 |
+| Floppy disk     |     5 |
+| Monitor         |   240 |
+| DVD drive       |   180 |
+| CD drive        |    90 |
+| Printer         |   270 |
+| Toner cartridge |    66 |
+| DVD burner      |   180 |
++-----------------+-------+
+10 rows in set (0.00 sec)
+
+
+
+3.mysql> select name from products where price <=200;
++-----------------+
+| name            |
++-----------------+
+| Memory          |
+| ZIP drive       |
+| Floppy disk     |
+| DVD drive       |
+| CD drive        |
+| Toner cartridge |
+| DVD burner      |
++-----------------+
+
+
+
+4.mysql> select * from products where price >=60  AND price <=120;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    2 | Memory          |   120 |            6 |
+|    7 | CD drive        |    90 |            2 |
+|    9 | Toner cartridge |    66 |            3 |
++------+-----------------+-------+--------------+
+3 rows in set (0.03 sec)
+
+
+
+5.mysql> select name, price*100 from products;
++-----------------+-----------+
+| name            | price*100 |
++-----------------+-----------+
+| Hard drive      |     24000 |
+| Memory          |     12000 |
+| ZIP drive       |     15000 |
+| Floppy disk     |       500 |
+| Monitor         |     24000 |
+| DVD drive       |     18000 |
+| CD drive        |      9000 |
+| Printer         |     27000 |
+| Toner cartridge |      6600 |
+| DVD burner      |     18000 |
++-----------------+-----------+
+10 rows in set (0.00 sec)
+
+
+
+6.mysql> select avg(price) from products;
++------------+
+| avg(price) |
++------------+
+|   154.1000 |
++------------+
+1 row in set (0.00 sec)
+
+
+
+7.mysql> select avg(price) from products where manufacturer = 2;
++------------+
+| avg(price) |
++------------+
+|   150.0000 |
++------------+
+1 row in set (0.00 sec)
+
+
+8.mysql> select count(name) from products where price >=120;
++-------------+
+| count(name) |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+9.mysql> select name,price from products where price >=120 ORDER BY price DESC;
++------------+-------+
+| name       | price |
++------------+-------+
+| Printer    |   270 |
+| Hard drive |   240 |
+| Monitor    |   240 |
+| DVD drive  |   180 |
+| DVD burner |   180 |
+| ZIP drive  |   150 |
+| Memory     |   120 |
++------------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select name,price from products where price >=120 ORDER BY NAME ASC;
++------------+-------+
+| name       | price |
++------------+-------+
+| DVD burner |   180 |
+| DVD drive  |   180 |
+| Hard drive |   240 |
+| Memory     |   120 |
+| Monitor    |   240 |
+| Printer    |   270 |
+| ZIP drive  |   150 |
++------------+-------+
+7 rows in set (0.03 sec)
+
+mysql> select name, price from products where price>=180 order by price desc, name asc;
++------------+-------+
+| name       | price |
++------------+-------+
+| Printer    |   270 |
+| Hard drive |   240 |
+| Monitor    |   240 |
+| DVD burner |   180 |
+| DVD drive  |   180 |
++------------+-------+
+5 rows in set (0.00 sec)
+
+
+
+10.mysql> select * from products p CROSS JOIN Manufacturers m ON p.code=m.code;
++------+-------------+-------+--------------+------+-----------------+
+| Code | Name        | Price | Manufacturer | Code | Name            |
++------+-------------+-------+--------------+------+-----------------+
+|    1 | Hard drive  |   240 |            5 |    1 | Sony            |
+|    2 | Memory      |   120 |            6 |    2 | Creative Labs   |
+|    3 | ZIP drive   |   150 |            4 |    3 | Hewlett-Packard |
+|    4 | Floppy disk |     5 |            6 |    4 | Iomega          |
+|    5 | Monitor     |   240 |            1 |    5 | Fujitsu         |
+|    6 | DVD drive   |   180 |            2 |    6 | Winchester      |
++------+-------------+-------+--------------+------+-----------------+
+6 rows in set (0.00 sec)
+
+
+11.mysql> select p.name,p.price,m.name from products p CROSS JOIN Manufacturers m ON p.code=m.code;
++-------------+-------+-----------------+
+| name        | price | name            |
++-------------+-------+-----------------+
+| Hard drive  |   240 | Sony            |
+| Memory      |   120 | Creative Labs   |
+| ZIP drive   |   150 | Hewlett-Packard |
+| Floppy disk |     5 | Iomega          |
+| Monitor     |   240 | Fujitsu         |
+| DVD drive   |   180 | Winchester      |
++-------------+-------+-----------------+
+6 rows in set (0.00 sec)
+
+
+12.mysql> select avg(price) ,Manufacturer from products GROUP BY Manufacturer;
++------------+--------------+
+| avg(price) | Manufacturer |
++------------+--------------+
+|   240.0000 |            1 |
+|   150.0000 |            2 |
+|   168.0000 |            3 |
+|   150.0000 |            4 |
+|   240.0000 |            5 |
+|    62.5000 |            6 |
++------------+--------------+
+6 rows in set (0.00 sec)
+
+13.mysql> select Avg(price),m.name from products p JOIN Manufacturers m ON p.code=m.code GROUP BY m.name;
++------------+-----------------+
+| Avg(price) | name            |
++------------+-----------------+
+|   240.0000 | Sony            |
+|   120.0000 | Creative Labs   |
+|   150.0000 | Hewlett-Packard |
+|     5.0000 | Iomega          |
+|   240.0000 | Fujitsu         |
+|   180.0000 | Winchester      |
++------------+-----------------+
+6 rows in set (0.05 sec)
+
+14.mysql> select Avg(price),m.name from products p JOIN Manufacturers m ON p.code=m.code GROUP BY p.Manufacturer HAVING avg(p.price)>=150;
++------------+-----------------+
+| Avg(price) | name            |
++------------+-----------------+
+|   240.0000 | Sony            |
+|   150.0000 | Hewlett-Packard |
+|   240.0000 | Fujitsu         |
+|   180.0000 | Winchester      |
++------------+-----------------+
+4 rows in set (0.03 sec)
+
+mysql>mysql> select name,price from products where price=(select min(price)  from products);
++-------------+-------+
+| name        | price |
++-------------+-------+
+| Floppy disk |     5 |
++-------------+-------+
+1 row in set (0.05 sec)
