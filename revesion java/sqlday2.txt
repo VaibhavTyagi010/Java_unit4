@@ -1,0 +1,26 @@
+1.select name,population,area from World where area>=3000000 OR population >=25000000;
+
+2.update Salary set sex = if(sex='m' , 'f','m');
+
+3.select * from Cinema where description <> "boring" AND id%2=1 Order by rating DESC;
+
+4.Select email from person GROUP BY email Having count(email)>1;
+
+5.select p.firstName,p.lastName,a.city,a.state from person p Left Join Address a ON p.personId=a.personId
+
+6.select a.Name  Employee
+from Employee a, Employee b
+where a.ManagerId = b.Id and a.Salary > b.Salary
+
+
+7.SELECT C.Name Customers FROM Customers C LEFT JOIN Orders O ON C.Id = O.CustomerId WHERE O.CustomerId is NULL
+
+
+8.delete p1  from Person p1,person p2 where p1.Email = p2.Email and p1.Id > p2.Id
+
+
+9.select a.id as Id from weather a join weather b ON DATEDIFF(a.recordDate, b.recordDate) = 1 AND a.temperature> b.temperature
+
+10.select class from Courses Group by class having count(distinct student) >= 5 ;
+
+11.select Max(salary) SecondHighestSalary from Employee where salary<(select max(salary) from Employee)
